@@ -1,9 +1,10 @@
 "use client"
 
-import { LucideIcon, Undo2Icon } from 'lucide-react';
+import { BoldIcon, ItalicIcon, LucideIcon, PrinterIcon, Redo2Icon, SpellCheckIcon, Underline, Undo2Icon } from 'lucide-react';
 import React from 'react'
 import { cn } from '@/lib/utils';
 import { useEditorStore } from '@/store/use-editor-store';
+import { Separator } from '@/components/ui/separator';
 
 interface ToolbarButtonProps{
     onClick?: ()=> void;
@@ -37,6 +38,51 @@ const Toolbar = () => {
                 icon : Undo2Icon,
                 //here the function is defined that will be executed when this button is clicked
                 onClick : ()=> editor?.chain().focus().undo().run()
+            },
+            {
+                label : "Redo",
+                icon : Redo2Icon,
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> editor?.chain().focus().redo().run()
+            },
+            {
+                label : "Print",
+                icon : PrinterIcon,
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> window.print()
+            },
+            {
+                label : "Spell Check",
+                icon : SpellCheckIcon,
+                //this is native browser spell check, no third party api
+                //here we are fetching the dom of the editor and calling the getAttribute
+                onClick : ()=> {
+                    const current = editor?.view.dom.getAttribute("spellcheck")
+                    editor?.view.dom.setAttribute("spellcheck", current=== "false" ? "true" : "false")
+                }
+            }
+        ] ,
+        [
+            {
+                label : "Bold",
+                icon : BoldIcon,
+                isActive : editor?.isActive("bold"),
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> editor?.chain().focus().toggleBold().run()
+            },
+            {
+                label : "Italic",
+                icon : ItalicIcon,
+                isActive : editor?.isActive("italic"),
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> editor?.chain().focus().toggleItalic().run()
+            },
+            {
+                label : "Underline",
+                icon : Underline,
+                isActive : editor?.isActive("underline"),
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> editor?.chain().focus().toggleUnderline().run()
             }
         ]
     ]
@@ -45,6 +91,18 @@ const Toolbar = () => {
         {sections[0].map((item)=>(
             <ToolbarButton key={item.label}{...item}/>
         ))}
+        <Separator orientation='vertical' className='h-6 bg-neutral-300'/>
+        {/* {TODO font family} */}
+        <Separator orientation='vertical' className='h-6 bg-neutral-300'/>
+        {/* {TODO Heading} */}
+        <Separator orientation='vertical' className='h-6 bg-neutral-300'/>
+        {/* {TODO font size} */}
+        <Separator orientation='vertical' className='h-6 bg-neutral-300'/>
+        {
+            sections[1].map((item)=>(
+                <ToolbarButton key={item.label}{...item}/>
+            ))
+        }
     </div>
   )
 }
