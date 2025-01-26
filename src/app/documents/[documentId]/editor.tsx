@@ -1,9 +1,15 @@
 "use client"
 
 import React from 'react'
-
+import TaskItem from "@tiptap/extension-task-item"
+import TaskList from "@tiptap/extension-task-list"
 import {useEditor, EditorContent} from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
+
 const Editor = () => {
     const editor = useEditor({
         editorProps : {
@@ -12,8 +18,33 @@ const Editor = () => {
                 class : "focus:outline-none print:border-0 bg-[#ffffff] border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 cursor-text"
             }
         },
-        extensions : [StarterKit],
-        content : '<p>hi</p>'
+        extensions : [
+            StarterKit,
+            Table,
+            TableCell,
+            TableHeader,
+            TableRow,
+            TaskItem.configure({
+                nested : true
+            }),
+            TaskList
+        ],
+        content : `
+        <table>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th colspan="3">Description</th>
+            </tr>
+            <tr>
+              <td>Cyndi Lauper</td>
+              <td>Singer</td>
+              <td>Songwriter</td>
+              <td>Actress</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
     })
   return (
     <div className='size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible'>
