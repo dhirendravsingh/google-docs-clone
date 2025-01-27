@@ -13,6 +13,9 @@ import Image from '@tiptap/extension-image'
 import ImageResize from "tiptap-extension-resize-image"
 import { useEditorStore } from '@/store/use-editor-store'
 import Underline from '@tiptap/extension-underline'
+import FontFamily from '@tiptap/extension-font-family'
+import TextStyle from '@tiptap/extension-text-style'
+
 const Editor = () => {
     //it is being called here like a custom hoook
     const {setEditor} = useEditorStore()
@@ -51,6 +54,8 @@ const Editor = () => {
         extensions : [
             StarterKit,
             Underline,
+            FontFamily,
+            TextStyle,
             Table,
             TableCell,
             TableHeader,
