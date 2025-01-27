@@ -1,6 +1,6 @@
 "use client"
 
-import { BoldIcon, ItalicIcon, LucideIcon, PrinterIcon, Redo2Icon, SpellCheckIcon, Underline, Undo2Icon } from 'lucide-react';
+import { BoldIcon, ItalicIcon, ListTodoIcon, LucideIcon, MessageSquarePlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SpellCheckIcon, Underline, Undo2Icon } from 'lucide-react';
 import React from 'react'
 import { cn } from '@/lib/utils';
 import { useEditorStore } from '@/store/use-editor-store';
@@ -84,6 +84,28 @@ const Toolbar = () => {
                 //here the function is defined that will be executed when this button is clicked
                 onClick : ()=> editor?.chain().focus().toggleUnderline().run()
             }
+        ],
+        [
+            {
+                label : "Comment",
+                icon : MessageSquarePlusIcon,
+                isActive : false,
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> console.log("TODO comment")
+            },
+            {
+                label : "List Todo",
+                icon : ListTodoIcon,
+                isActive : editor?.isActive("taskList"),
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> editor?.chain().focus().toggleTaskList().run()
+            },
+            {
+                label : "Remove Formatting",
+                icon : RemoveFormattingIcon,
+                //here the function is defined that will be executed when this button is clicked
+                onClick : ()=> editor?.chain().focus().unsetAllMarks().run()
+            }
         ]
     ]
   return (
@@ -103,6 +125,21 @@ const Toolbar = () => {
                 <ToolbarButton key={item.label}{...item}/>
             ))
         }
+        {/* {Text color} */}
+        {/* {highlight color} */}
+        <Separator orientation='vertical' className='h-6 bg-neutral-300'/>
+        {/* {Link} */}
+        {/* {Image} */}
+        {/* {Align} */}
+        {/* {Line height} */}
+        {/* {List} */}
+
+        {
+            sections[2].map((item)=>(
+                <ToolbarButton key={item.label}{...item}/>
+            ))
+        }
+
     </div>
   )
 }
