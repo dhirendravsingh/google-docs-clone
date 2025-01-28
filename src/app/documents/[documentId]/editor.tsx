@@ -15,6 +15,8 @@ import { useEditorStore } from '@/store/use-editor-store'
 import Underline from '@tiptap/extension-underline'
 import FontFamily from '@tiptap/extension-font-family'
 import TextStyle from '@tiptap/extension-text-style'
+import {Color} from "@tiptap/extension-color"
+import Highlight from "@tiptap/extension-highlight"
 
 const Editor = () => {
     //it is being called here like a custom hoook
@@ -65,7 +67,12 @@ const Editor = () => {
             TaskItem.configure({
                 nested : true
             }),
-            TaskList
+            TaskList,
+            Color,
+            //have to set the highlight multicolor to true, otherwise it will show only yellow color to highlight
+            Highlight.configure({
+              multicolor: true
+            })
         ],
         content : `
         <table>
