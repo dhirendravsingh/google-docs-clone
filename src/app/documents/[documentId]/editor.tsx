@@ -17,6 +17,7 @@ import FontFamily from '@tiptap/extension-font-family'
 import TextStyle from '@tiptap/extension-text-style'
 import {Color} from "@tiptap/extension-color"
 import Highlight from "@tiptap/extension-highlight"
+import Link from "@tiptap/extension-link"
 
 const Editor = () => {
     //it is being called here like a custom hoook
@@ -56,6 +57,11 @@ const Editor = () => {
         extensions : [
             StarterKit,
             Underline,
+            Link.configure({
+              openOnClick: false,
+              autolink: true,
+              defaultProtocol: "https"
+            }),
             FontFamily,
             TextStyle,
             Table,

@@ -1,13 +1,130 @@
 "use client"
 
 import {type ColorResult, CirclePicker, SketchPicker } from "react-color"
-import { BoldIcon, ChevronDownIcon, Highlighter, ItalicIcon, ListTodoIcon, LucideIcon, MessageSquarePlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SpellCheckIcon, Underline, Undo2Icon } from 'lucide-react';
-import React from 'react'
+import { BoldIcon, ChevronDownIcon, Highlighter, ImageIcon, ItalicIcon, Link2Icon, ListTodoIcon, LucideIcon, MessageSquarePlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SpellCheckIcon, Underline, Undo2Icon, UploadIcon } from 'lucide-react';
+import React, { useState } from 'react'
 import { cn } from '@/lib/utils';
 import { useEditorStore } from '@/store/use-editor-store';
 import { Separator } from '@/components/ui/separator';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { type Level } from '@tiptap/extension-heading';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+const ImageButton = ()=>{
+    const {editor} = useEditorStore()
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [imageUrl, setImageUrl] = useState("")
+
+    //this sets the imageUrl in the editor, uses the command chain to foucs on the editor
+    const onClick = (src : string)=>{
+        editor?.chain().focus().setImage({src}).run()
+    }
+
+    //this creates a file input component
+    const onUpload=()=>{
+        const input = document.createElement("input")
+        input.type = "file"
+        input.accept = "image/*"
+
+        input.onchange =(e)=>{
+            const file = (e.target as HTMLInputElement).files?.[0]
+            if(file){
+                //here if the image file exists, then it will create a url of that 
+                const imageUrl = URL.createObjectURL(file)
+                onClick(imageUrl)
+            }
+
+        }
+
+        input.click()
+    }
+
+    //this will be handling if only the url of the image has been submitted
+    const handleImageUrlSubmit=()=>{
+        if(imageUrl){
+            onClick(imageUrl)
+            setImageUrl("")
+            setIsDialogOpen(false)
+        }
+    }
+
+    return (
+        <>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+            <button className='h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm'>
+            <ImageIcon className="size-4"/>
+            </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent >
+                <DropdownMenuItem onClick={onUpload}>
+              <UploadIcon className="size-4 mr-2"/>
+                Upload
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>setIsDialogOpen(true)}>
+              <UploadIcon className="size-4 mr-2"/>
+                Image URL
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Insert image URL</DialogTitle>
+                </DialogHeader>
+                <Input placeholder="Inset image URL"
+                value={imageUrl}
+                onChange={(e)=> setImageUrl(e.target.value)}
+                onKeyDown={(e)=>{
+                    if(e.key === 'Enter'){{
+                        handleImageUrlSubmit()
+                    }
+                }}}/>
+                <DialogFooter>
+                <Button onClick={handleImageUrlSubmit}>
+                    Insert
+                </Button>
+            </DialogFooter>
+            </DialogContent>
+            
+        </Dialog>
+        </>
+    )
+}
+
+const LinkButton = ()=>{
+    const {editor} = useEditorStore()
+    const [value, setValue] = useState(editor?.getAttributes("link").href || "")
+
+    const onClick = (href : string)=>{
+        editor?.chain().focus().extendMarkRange("link").setLink({href}).run()
+        setValue("")
+    }
+
+    return (
+        <DropdownMenu onOpenChange={(open)=>{
+            if(open){
+                setValue(editor?.getAttributes("link").href || "")
+            }
+        }}>
+            <DropdownMenuTrigger asChild>
+            <button className='h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm'>
+            <Link2Icon className="size-4"/>
+            </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
+               <Input placeholder="Paste link" value={value} onChange={(e)=> setValue(e.target.value)}/>
+               <Button onClick={()=> onClick(value)}>
+                Apply
+                 </Button>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
+
 
 const HighlightColorButton=()=>{
     const {editor} = useEditorStore()
@@ -281,8 +398,8 @@ const Toolbar = () => {
         <TextColorButton/>
         <HighlightColorButton/>
         <Separator orientation='vertical' className='h-6 bg-neutral-300'/>
-        {/* {Link} */}
-        {/* {Image} */}
+        <LinkButton/>
+        <ImageButton/>
         {/* {Align} */}
         {/* {Line height} */}
         {/* {List} */}
