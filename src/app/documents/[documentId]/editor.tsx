@@ -18,6 +18,7 @@ import TextStyle from '@tiptap/extension-text-style'
 import {Color} from "@tiptap/extension-color"
 import Highlight from "@tiptap/extension-highlight"
 import Link from "@tiptap/extension-link"
+import TextAlign from "@tiptap/extension-text-align"
 
 const Editor = () => {
     //it is being called here like a custom hoook
@@ -69,6 +70,9 @@ const Editor = () => {
             TableHeader,
             TableRow,
             Image,
+            TextAlign.configure({
+              types: ["heading", "paragraph"]
+            }),
             ImageResize,
             TaskItem.configure({
                 nested : true
