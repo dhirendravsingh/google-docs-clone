@@ -20,6 +20,8 @@ import Highlight from "@tiptap/extension-highlight"
 import Link from "@tiptap/extension-link"
 import TextAlign from "@tiptap/extension-text-align"
 
+
+import { FontSizeExtension } from '@/extensions/font-size'
 const Editor = () => {
     //it is being called here like a custom hoook
     const {setEditor} = useEditorStore()
@@ -57,6 +59,7 @@ const Editor = () => {
         },
         extensions : [
             StarterKit,
+            FontSizeExtension,
             Underline,
             Link.configure({
               openOnClick: false,
