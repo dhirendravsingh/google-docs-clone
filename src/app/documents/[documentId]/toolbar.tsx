@@ -17,11 +17,12 @@ const ImageButton = ()=>{
     const [imageUrl, setImageUrl] = useState("")
 
     //this sets the imageUrl in the editor, uses the command chain to foucs on the editor
-    const onClick = (src : string)=>{
+    //hence this command is responsible for displaying the images in the editor portion
+    const onDisplay = (src : string)=>{
         editor?.chain().focus().setImage({src}).run()
     }
 
-    //this creates a file input component
+    //this creates a URL of the input file fed from the computer, this url is then fed into the command above to display in the editor
     const onUpload=()=>{
         const input = document.createElement("input")
         input.type = "file"
@@ -32,7 +33,7 @@ const ImageButton = ()=>{
             if(file){
                 //here if the image file exists, then it will create a url of that 
                 const imageUrl = URL.createObjectURL(file)
-                onClick(imageUrl)
+                onDisplay(imageUrl)
             }
 
         }
@@ -40,10 +41,10 @@ const ImageButton = ()=>{
         input.click()
     }
 
-    //this will be handling if only the url of the image has been submitted
+    //this will handle the Image url provided by the user, it will feed these url to the onDisplay function above
     const handleImageUrlSubmit=()=>{
         if(imageUrl){
-            onClick(imageUrl)
+            onDisplay(imageUrl)
             setImageUrl("")
             setIsDialogOpen(false)
         }
