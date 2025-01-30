@@ -22,6 +22,7 @@ import TextAlign from "@tiptap/extension-text-align"
 
 
 import { FontSizeExtension } from '@/extensions/font-size'
+import { LineHeightExtension } from '@/extensions/line-height'
 const Editor = () => {
     //it is being called here like a custom hoook
     const {setEditor} = useEditorStore()
@@ -60,6 +61,7 @@ const Editor = () => {
         extensions : [
             StarterKit,
             FontSizeExtension,
+            LineHeightExtension,
             Underline,
             Link.configure({
               openOnClick: false,
