@@ -1,6 +1,7 @@
 import React from 'react'
-import Link from 'next/link'
 import { Navbar } from './navbar'
+import  TemplateGallery from './template-gallery'
+
 const Home = () => {
   return (
     <div className='min-h-screen flex flex-col'>
@@ -8,11 +9,8 @@ const Home = () => {
         <Navbar/>
       </div>
       <div className='mt-16'>
-        <Link href="/documents/id">
-        <button>Click here to open documents</button> 
-    </Link>
-    <h3 className='text-xl'>Docs</h3>
-    </div>
+        <TemplateGallery/>
+      </div>
        
     </div>
     
@@ -20,3 +18,4 @@ const Home = () => {
 }
 
 export default Home
+ 
