@@ -35,3 +35,35 @@ export const get = query({
     // do something with `tasks`
   },
 });
+
+//functionality to remove a document
+export const removeById = mutation({
+  args :  {id : v.id("documents")},
+  //the handler function will be called when the user hits the /documents/:id endpoint
+  handler : async (ctx, args) => { 
+    //first we have to check if the user is authenticated
+    const user = await ctx.auth.getUserIdentity()
+
+    if(!user){
+      throw new Error("User not authenticated")
+    }
+  
+  //now fetching the document from the database
+  const document = await ctx.db.get(args.id)
+
+  if(!document){
+    throw new Error("Document not found")
+  }
+  
+//now we will check if the user is the owner of the document
+  const isOwner = document.ownerId === user.subject
+
+  if(!isOwner){
+    throw new Error("Unauthorized")
+  }
+
+  //now we will remove the document from the database
+  return await ctx.db.delete(args.id)
+  
+}
+})
