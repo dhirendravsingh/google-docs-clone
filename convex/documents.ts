@@ -67,3 +67,35 @@ export const removeById = mutation({
   
 }
 })
+
+//functionality to update a document
+export const updateById = mutation({
+  args :  {id : v.id("documents"), title: v.optional(v.string())},
+  //the handler function will be called when the user hits the /documents/:id endpoint
+  handler : async (ctx, args) => { 
+    //first we have to check if the user is authenticated
+    const user = await ctx.auth.getUserIdentity()
+
+    if(!user){
+      throw new Error("User not authenticated")
+    }
+  
+  //now fetching the document from the database
+  const document = await ctx.db.get(args.id)
+
+  if(!document){
+    throw new Error("Document not found")
+  }
+  
+//now we will check if the user is the owner of the document
+  const isOwner = document.ownerId === user.subject
+
+  if(!isOwner){
+    throw new Error("Unauthorized")
+  }
+
+  //now we will update the document
+  return await ctx.db.patch(args.id, {title: args.title})
+  
+}
+})
