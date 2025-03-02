@@ -6,9 +6,13 @@ import { api } from '../../../convex/_generated/api'
 import { Navbar } from './navbar'
 import  TemplateGallery from './template-gallery'
 import DocumentsTable from './DocumentsTable'
+import { useSearchParam } from '@/hooks/use-search-params'
 
 const Home = () => {
-  const {results, status, loadMore} = usePaginatedQuery(api.documents.get, {}, {initialNumItems: 5})
+
+  const [search] = useSearchParam("search")
+
+  const {results, status, loadMore} = usePaginatedQuery(api.documents.get, {search}, {initialNumItems: 5})
   
   return (
     <div className='min-h-screen flex flex-col'>
