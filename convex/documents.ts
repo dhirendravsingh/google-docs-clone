@@ -18,10 +18,15 @@ export const create = mutation({
       throw new Error("User not authenticated")
     }
 
+    const organizationId = (user.organization_id ?? undefined) as 
+    | string
+    | undefined
+
     //now creating the document
     return await ctx.db.insert("documents", {
       title: args.title ?? "Untitled Document",
       ownerId: user.subject,
+      organizationId,
       initialContent: args.initialContent 
     })
   }
@@ -39,16 +44,37 @@ export const get = query({
       throw new Error("Unauthorized")
     }
 
+    const organizationId = (user.organization_id ?? undefined) as 
+    | string
+    | undefined
+
+    //search within organization
+    if(search && organizationId){
+      return await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q)=> 
+        q.search("title", search).eq("organizationId", organizationId))
+        .paginate(paginationOpts)
+    }
+
     //when searching the document
     if(search){
       return await ctx.db.query("documents")
       .withSearchIndex("search_title" , (q)=>q.search("title", search).eq("ownerId", user.subject))
       .paginate(paginationOpts)
     }
+
+    //All docs inside organization
+    if(organizationId){
+      return await ctx.db
+        .query("documents")
+        .withIndex("by_organization_id", (q)=> q.eq("organizationId", organizationId))
+        .paginate(paginationOpts);
+    }
     return await ctx.db
-    .query("documents")
-    .withIndex("by_owner_id", (q)=> q.eq("ownerId", user.subject))
-    .paginate(paginationOpts);
+      .query("documents")
+      .withIndex("by_owner_id", (q)=> q.eq("ownerId", user.subject))
+      .paginate(paginationOpts);
     // do something with `tasks`
   },
 });

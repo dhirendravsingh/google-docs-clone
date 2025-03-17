@@ -14,7 +14,7 @@ import {
 import { templates } from "@/constants/templates"
 import React, { useState } from 'react'
 import { useMutation } from "convex/react"
-
+import { toast } from "sonner"
 const TemplateGallery = () => {
     const router = useRouter()
 
@@ -25,7 +25,9 @@ const TemplateGallery = () => {
     const onTemplateClick = (title: string, initialContent: string) => { 
         setIsCreating(true)
         create({title, initialContent})
+        .catch(()=> toast.error("Something went wrong"))
         .then((documentId)=>{
+            toast.success("Document created")
             router.push(`/documents/${documentId}`)
         })
         .finally(()=>{

@@ -26,8 +26,8 @@ const DocumentRow = ({document} : DocumentRowProps) => {
             {document.title}
         </TableCell>
         <TableCell className='text-muted-foreground hidden md:flex items-center gap-2'>
-            {document.organizaitonId ? <Building2Icon className='size-4'/> : <CircleUserIcon className='size-4'/>}
-            {document.organizaitonId ? "Organization" : "Personal"}
+            {document.organizationId ? <Building2Icon className='size-4'/> : <CircleUserIcon className='size-4'/>}
+            {document.organizationId ? "Organization" : "Personal"}
         </TableCell>
         <TableCell className='text-muted-foreground hidden md:table-cell'>
             {format(new Date(document._creationTime), "MMM d, yyyy")}
