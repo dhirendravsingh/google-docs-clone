@@ -1,6 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
-import {v} from "convex/values"
+import {ConvexError, v} from "convex/values"
 
 //this is the post method that will be called when the user hits the /documents endpoint
 //whenver we creating a new document we will have to pass the arguments along with a handler function
@@ -132,7 +132,7 @@ export const updateById = mutation({
   
 //now we will check if the user is the owner of the document
   const isOwner = document.ownerId === user.subject
-
+  
   if(!isOwner){
     throw new Error("Unauthorized")
   }
@@ -141,4 +141,13 @@ export const updateById = mutation({
   return await ctx.db.patch(args.id, {title: args.title})
   
 }
+})
+
+
+export const getById = query({
+  args : {id : v.id("documents")},
+  handler : async(ctx, {id})=>{
+    return await ctx.db.get(id)
+
+  }
 })
