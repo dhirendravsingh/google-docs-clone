@@ -583,9 +583,9 @@ const Toolbar = () => {
             {
                 label : "Comment",
                 icon : MessageSquarePlusIcon,
-                isActive : false,
+                isActive : editor?.isActive("liveblocksCommentMark") ,
                 //here the function is defined that will be executed when this button is clicked
-                onClick : ()=> console.log("TODO comment")
+                onClick : ()=> editor?.chain().focus().addPendingComment().run()
             },
             {
                 label : "List Todo",

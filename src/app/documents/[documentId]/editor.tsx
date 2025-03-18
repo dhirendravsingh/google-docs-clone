@@ -19,12 +19,13 @@ import {Color} from "@tiptap/extension-color"
 import Highlight from "@tiptap/extension-highlight"
 import Link from "@tiptap/extension-link"
 import TextAlign from "@tiptap/extension-text-align"
-
-
+import {useLiveblocksExtension} from "@liveblocks/react-tiptap"
+import { Threads } from './threads'
 import { FontSizeExtension } from '@/extensions/font-size'
 import { LineHeightExtension } from '@/extensions/line-height'
 import { Ruler } from './ruler'
 const Editor = () => {
+    const liveblocks = useLiveblocksExtension()
     //it is being called here like a custom hoook
     const {setEditor} = useEditorStore()
 
@@ -61,7 +62,10 @@ const Editor = () => {
             }
         },
         extensions : [
-            StarterKit,
+            liveblocks,
+            StarterKit.configure({
+              history : false
+            }),
             FontSizeExtension,
             LineHeightExtension,
             Underline,
@@ -97,6 +101,7 @@ const Editor = () => {
       <Ruler/>
        <div className='min-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0'>
             <EditorContent editor={editor} />
+            <Threads editor={editor}/>
        </div> 
     </div>
   )
