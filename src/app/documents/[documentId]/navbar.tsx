@@ -17,6 +17,7 @@ import {
     
 
 } from "@/components/ui/menubar"
+import { Avatars } from "./avatars"
 import { BoldIcon, FileIcon, FileJsonIcon, FilePenIcon, FilePlusIcon, FileTextIcon, GlobeIcon, ItalicIcon, PrinterIcon, Redo2Icon, RemoveFormatting, Strikethrough, StrikethroughIcon, TextIcon, TrashIcon, UnderlineIcon, Undo2Icon, UndoIcon } from "lucide-react"
 import { BsFilePdf } from "react-icons/bs"
 import { useEditorStore } from "@/store/use-editor-store"
@@ -213,6 +214,7 @@ export const Navbar =()=>{
                 </div>
             </div>
             <div className="flex gap-3 items-center pl-6">
+                <Avatars/>
                 <OrganizationSwitcher
                 afterCreateOrganizationUrl="/"
                 afterLeaveOrganizationUrl="/"
