@@ -24,7 +24,10 @@ import { Threads } from './threads'
 import { FontSizeExtension } from '@/extensions/font-size'
 import { LineHeightExtension } from '@/extensions/line-height'
 import { Ruler } from './ruler'
+import { useStorage } from '@liveblocks/react'
 const Editor = () => {
+    const leftMargin = useStorage((root)=> root.leftMargin)
+    const rightMargin = useStorage((root)=> root.rightMargin)
     const liveblocks = useLiveblocksExtension()
     //it is being called here like a custom hoook
     const {setEditor} = useEditorStore()
@@ -57,7 +60,7 @@ const Editor = () => {
         },
         editorProps : {
             attributes : {
-                style : "padding-left: 56px; padding-right: 56px;",
+                style : `padding-left: ${leftMargin ?? 56}px; padding-right: ${rightMargin ?? 56}px;`,
                 class : "focus:outline-none print:border-0 bg-[#ffffff] border border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 cursor-text"
             }
         },
