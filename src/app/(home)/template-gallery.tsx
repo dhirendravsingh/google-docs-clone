@@ -48,7 +48,7 @@ const TemplateGallery = () => {
                                 isCreating && "pointer-events-none opacity-50"
                             )}>
                                 <button disabled={isCreating}
-                                onClick={()=> onTemplateClick(template.label, "")}
+                                onClick={()=> onTemplateClick(template.label, template.initialContent)}
                                 style={{backgroundImage: `url(${template.imageUrl})`,
                                 backgroundSize: "cover",
                                 backgroundPosition: "center",

@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server"
 import Document from "./document"
 import { Id } from "../../../../convex/_generated/dataModel"
-import { usePreloadedQuery } from "convex/react"
+// import { usePreloadedQuery } from "convex/react"
 import {preloadQuery} from "convex/nextjs"
 import { api } from "../../../../convex/_generated/api"
 

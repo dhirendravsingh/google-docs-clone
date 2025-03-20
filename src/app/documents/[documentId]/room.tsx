@@ -10,10 +10,10 @@ import { useParams } from "next/navigation";
 import { FullscreenLoader } from "@/components/fullscreen-loader";
 import { getUsers, getDocuments } from "./actions";
 import { toast } from "sonner";
-import { EmailAddress } from "@clerk/nextjs/server";
+// import { EmailAddress } from "@clerk/nextjs/server";
 import { Id } from "../../../../convex/_generated/dataModel";
 
-type User = {id : string;  name : string ; avatar : string}
+type User = {id : string;  name : string ; avatar : string ; color : string}
 
 export function Room({ children }: { children: ReactNode }) {
     const params = useParams()
@@ -25,6 +25,7 @@ export function Room({ children }: { children: ReactNode }) {
           const list = await getUsers()
           setUsers(list)
         } catch (error) {
+          console.error(error)
             toast.error("Failed to fetch user")
         }
       },[]

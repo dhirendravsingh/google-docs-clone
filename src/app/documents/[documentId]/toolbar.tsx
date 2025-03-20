@@ -1,6 +1,6 @@
 "use client"
 
-import {type ColorResult, CirclePicker, SketchPicker } from "react-color"
+import {type ColorResult, SketchPicker } from "react-color"
 import { AlignCenterIcon, AlignJustifyIcon, AlignLeftIcon, AlignRightIcon, BoldIcon, ChevronDownIcon, Highlighter, ImageIcon, ItalicIcon, Link2Icon, ListCollapseIcon, ListIcon, ListOrderedIcon, ListTodoIcon, LucideIcon, MessageSquarePlusIcon, MinusIcon, PlusIcon, PrinterIcon, Redo2Icon, RemoveFormattingIcon, SpellCheckIcon, Underline, Undo2Icon, UploadIcon } from 'lucide-react';
 import React, { useState } from 'react'
 import { cn } from '@/lib/utils';
@@ -11,7 +11,6 @@ import { type Level } from '@tiptap/extension-heading';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import TextAlign from "@tiptap/extension-text-align";
 
 
 const LineHeightButton=()=>{

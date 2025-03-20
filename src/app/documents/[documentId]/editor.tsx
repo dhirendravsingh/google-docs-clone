@@ -25,10 +25,20 @@ import { FontSizeExtension } from '@/extensions/font-size'
 import { LineHeightExtension } from '@/extensions/line-height'
 import { Ruler } from './ruler'
 import { useStorage } from '@liveblocks/react'
-const Editor = () => {
+
+interface EditorProps {
+  initialContent? : string | undefined
+}
+
+const Editor = ({initialContent} : EditorProps) => {
     const leftMargin = useStorage((root)=> root.leftMargin)
     const rightMargin = useStorage((root)=> root.rightMargin)
-    const liveblocks = useLiveblocksExtension()
+    const liveblocks = useLiveblocksExtension(
+      {
+        initialContent,
+        offlineSupport_experimental : true
+      }
+    )
     //it is being called here like a custom hoook
     const {setEditor} = useEditorStore()
 
