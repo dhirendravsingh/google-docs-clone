@@ -1,25 +1,29 @@
-import React from 'react'
-import Editor from './editor'
-import Toolbar from './toolbar'
-import { Navbar } from './navbar'
-import { Room } from './room'
+import { auth } from "@clerk/nextjs/server"
+import Document from "./document"
+import { Id } from "../../../../convex/_generated/dataModel"
+import { usePreloadedQuery } from "convex/react"
+import {preloadQuery} from "convex/nextjs"
+import { api } from "../../../../convex/_generated/api"
 
-const documentId = () => {
-  
+interface documentIdProps {
+  params : Promise<{documentId : Id<"documents">}>
+}
+
+const documentId = async ({params} : documentIdProps) => {
+    const {documentId} = await params
+    const {getToken} = await auth()
+    const token = await getToken({template : "convex"}) ?? undefined
+
+    const preloadedDocument = await preloadQuery(
+      api.documents.getById,
+      {id : documentId},
+      {token}
+    )
+
   return (
-    <Room>
-    <div className='min-h-screen bg-[#FAFBFD]'>
-      <div className='flex flex-col px-4 pt-2 gap-y-2 fixed top-0 left-0 right-0 z-10 bg-[#fafbfd] print:hidden'>
-        <Navbar/>
-        <Toolbar/>
-      </div>
-      <div className='pt-[114px] print:pt-0'>
-        
-          <Editor/>
-        
-      </div> 
-    </div>
-    </Room>
+   
+   <Document preloadedDocument={preloadedDocument}/>
+   
   )
 }
 
