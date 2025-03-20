@@ -27,7 +27,6 @@ const RemoveDialog = ({documentId, children} : RemoveDialogProps) => {
 
     const remove = useMutation(api.documents.removeById)
     const [isRemoving, setIsRemoving] = useState(false)
-
   return (
     <AlertDialog>
         <AlertDialogTrigger asChild>
