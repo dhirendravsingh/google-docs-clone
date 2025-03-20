@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Google Docs Clone
 
-## Getting Started
+Overview
 
-First, run the development server:
+This project is a Google Docs clone that enables collaborative editing with a rich-text editor offering multiple formatting functions. Users can edit documents in real time with others, see live updates, and experience a seamless document editing experience similar to Google Docs.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+TypeScript & Next.js – The core framework for the frontend and backend.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Convex – Manages the database and real-time data synchronization.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tiptap Editor – A powerful, customizable rich-text editor.
 
-## Learn More
+Liveblocks – Enables real-time collaboration and live user editing.
 
-To learn more about Next.js, take a look at the following resources:
+Clerk – Handles authentication and user management.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ShadCN UI – Provides modern and beautiful UI components for an enhanced user experience.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Setup & Installation
 
-## Deploy on Vercel
+To run the project locally, follow these steps:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Clone the repository:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Install dependencies:
+
+Set up environment variables:
+Create a .env.local file in the root directory and add the required API keys:
+
+Run the Convex database server:
+
+Run the application:
+
+The app will be available at http://localhost:3000.
+
+Live Demo & Video Walkthrough
+
+Live Site: https://google-docs--clone.vercel.app/
+
+Loom Video: Project Demo
+
+Enjoy collaborative editing with real-time updates! 🚀
+
